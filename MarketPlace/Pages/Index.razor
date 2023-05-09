@@ -1,0 +1,16 @@
+﻿@page "/"
+
+@attribute [Authorize]
+
+<AuthorizeView Roles="Admin">
+    <Authorized>
+<h1>Ingreso al sistema correctamente</h1>
+        <DataApplicationsAdmin></DataApplicationsAdmin>
+    </Authorized>
+</AuthorizeView>
+
+<AuthorizeView Roles="Pastor">
+    <Authorized>
+        <Home></Home>
+    </Authorized>
+</AuthorizeView>

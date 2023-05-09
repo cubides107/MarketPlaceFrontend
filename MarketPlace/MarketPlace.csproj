@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <RootNamespace>CreditAppWeb</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Blazored.LocalStorage" Version="4.3.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="7.0.3" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="7.0.3" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.3" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.3" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+        <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
+        <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
+        <PackageReference Include="Radzen.Blazor" Version="4.7.8" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Pages\CreditApplication\AddDocument.razor" />
+      <_ContentIncludedByDefault Remove="Pages\CreditApplication\CreateApplication.razor" />
+      <_ContentIncludedByDefault Remove="Pages\CreditApplication\CreateDebtDialog.razor" />
+      <_ContentIncludedByDefault Remove="Pages\CreditApplication\CreateIncome.razor" />
+      <_ContentIncludedByDefault Remove="Pages\CreditApplication\DataApplications.razor" />
+      <_ContentIncludedByDefault Remove="Pages\CreditApplication\DataApplicationsAdmin.razor" />
+      <_ContentIncludedByDefault Remove="Pages\CreditApplication\DetailApplication.razor" />
+      <_ContentIncludedByDefault Remove="Pages\CreditApplication\MyCredits\MyCreditsHome.razor" />
+      <_ContentIncludedByDefault Remove="Pages\Home\Home.razor" />
+      <_ContentIncludedByDefault Remove="Shared\Components\UploadFile.razor" />
+      <_ContentIncludedByDefault Remove="Shared\Menu\Menu.razor" />
+    </ItemGroup>
+
+</Project>

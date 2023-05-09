@@ -1,0 +1,16 @@
+﻿@inherits LayoutComponentBase
+
+<div class="page">
+    <main>
+        <AuthorizeView>
+            <Authorized>
+                <Menu UserEmail="@context.User.Identity.Name"></Menu>
+            </Authorized>
+        </AuthorizeView>
+        <div class="content p-0" style="margin-bottom: 55px">
+            @Body
+        </div>
+    </main>
+    <RadzenNotification/>
+    <RadzenDialog/>
+</div>

@@ -1,0 +1,331 @@
+﻿@page "/profile"
+@using CreditAppWeb.Data.Http.Users
+@inject UserClient usersHttp
+@attribute [Authorize]
+
+<div class="align-items-center mt-2">
+<RadzenCard class="container-fluid col-md-10">
+<div class="row">
+    <div class="col">
+        <div class="d-grid justify-content-end">
+            <RadzenButton class="" Style="background-color:#10172D" Click="@(args => ChangeIsSave())">Editar</RadzenButton>
+        </div>
+    </div>
+
+</div>
+
+<RadzenTemplateForm Data="@ProfileUser" Submit="@((ProfileUserRequest args) => { UpdateUser(); })">
+<RadzenFieldset Text="Informacion Basica">
+
+<div class="container">
+<div class="row">
+<div class="col-md-6">
+    <div class="row mb-2">
+        <div class="col-md-4">
+            <RadzenLabel>Nombres</RadzenLabel>
+        </div>
+        <div class="col-md-8 d-flex mb-3">
+            <RadzenTextBox class="w-100" @bind-Value="ProfileUser.Names"
+                           Name="Name" Disabled="@IsSave">
+            </RadzenTextBox>
+            <RadzenRequiredValidator class="rz-message rz-messages-error rz-message-popup newInputValidation mt-4"
+                                     Component="Name" Text="Llenar Campo"
+                                     Popup="true"
+                                     DefaultValue="0"/>
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col-md-4">
+            <RadzenLabel>Email</RadzenLabel>
+        </div>
+        <div class="col-md-8 d-flex mb-3">
+            <RadzenTextBox class="w-100" Disabled="@IsSave" @bind-Value="ProfileUser.Email" Name="Email"/>
+            <RadzenRequiredValidator class="rz-message rz-messages-error rz-message-popup newInputValidation mt-4" Component="Email" Text="Llenar Campo" Popup="true"/>
+            <RadzenEmailValidator Component="Email" Text="Ingrese un email correcto" class="rz-message rz-messages-error rz-message-popup newInputValidation mt-4" Popup="true" Style="position: absolute"/>
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col-md-4">
+            <RadzenLabel>No. Identicación</RadzenLabel>
+        </div>
+        <div class="col-md-8 d-flex mb-3">
+            <RadzenNumeric class="w-100" Disabled="@IsSave" @bind-Value="ProfileUser.DocumentId"
+                           Name="Identification" ShowUpDown="false">
+            </RadzenNumeric>
+            <RadzenRequiredValidator class="rz-message rz-messages-error rz-message-popup newInputValidation mt-4"
+                                     Component="Identification" Text="Llenar Campo"
+                                     Popup="true"
+                                     DefaultValue="0"/>
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col-md-4 d-flex">
+            <RadzenLabel Text="Fecha de Nacimiento"/>
+        </div>
+        <div class="col-md-8">
+            <RadzenDatePicker class="w-100" Disabled="@IsSave" DateFormat="MM/dd/yyyy"
+                              @bind-Value="@ProfileUser.DateOfBirth">
+            </RadzenDatePicker>
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col-md-4 d-flex">
+            <RadzenLabel Text="Celular"/>
+        </div>
+        <div class="col-md-8 d-flex mb-3">
+            <RadzenNumeric class="w-100" Disabled="@IsSave" @bind-Value="ProfileUser.PhoneNumber"
+                           Name="Name" ShowUpDown="false">
+            </RadzenNumeric>
+            <RadzenRequiredValidator class="rz-message rz-messages-error rz-message-popup newInputValidation mt-4"
+                                     Component="Name" Text="Llenar Campo"
+                                     Popup="true"
+                                     DefaultValue="0"/>
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col-md-4 d-flex">
+            <RadzenLabel>Telefono Fijo</RadzenLabel>
+        </div>
+        <div class="col-md-8">
+            <RadzenNumeric @bind-Value="ProfileUser.LandLine" Disabled="@IsSave" ShowUpDown="false" class="w-100" Name="LandLine"></RadzenNumeric>
+            <RadzenRequiredValidator class="rz-message rz-messages-error rz-message-popup newInputValidation mt-4"
+                                     Component="LandLine" Text="Llenar Campo"
+                                     Popup="true"
+                                     DefaultValue="0"/>
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col-md-4 d-flex">
+            <RadzenLabel>Dirección</RadzenLabel>
+        </div>
+        <div class="col-md-8 d-flex mb-3">
+            <RadzenTextBox @bind-Value="ProfileUser.Address" Disabled="@IsSave" class="w-100" Name="Address"></RadzenTextBox>
+            <RadzenRequiredValidator class="rz-message rz-messages-error rz-message-popup newInputValidation mt-4"
+                                     Component="Address" Text="Llenar Campo"
+                                     Popup="true"
+                                     DefaultValue="0"/>
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col-md-4 d-flex">
+            <RadzenLabel>Departamento</RadzenLabel>
+        </div>
+        <div class="col-md-8">
+            <RadzenDropDown TValue="UserClient" Disabled="@IsSave" AllowFiltering="true" TextProperty="Name"
+                            FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" ValueProperty="Id" style="width:100%;"
+                            Name="Departement"/>
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col-md-4 d-flex">
+            <RadzenLabel>Municipio</RadzenLabel>
+        </div>
+        <div class="col-md-8">
+            <RadzenDropDown TValue="UserClient" Disabled="@IsSave" AllowFiltering="true" TextProperty="Name"
+                            FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" ValueProperty="Id" style="width:100%;"
+                            Name="Departement"/>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-6">
+    <div class="row mb-2">
+        <div class="col-md-4 d-flex">
+            <RadzenLabel>Apellidos</RadzenLabel>
+        </div>
+        <div class="col-md-8 d-flex mb-3">
+            <RadzenTextBox class="w-100" Disabled="@IsSave" @bind-Value="ProfileUser.LastNames" Name="LastName"></RadzenTextBox>
+            <RadzenRequiredValidator class="rz-message rz-messages-error rz-message-popup newInputValidation mt-4"
+                                     Component="LastName" Text="Llenar Campo"
+                                     Popup="true"
+                                     DefaultValue="0"/>
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col-md-4 d-flex">
+            <RadzenLabel>Congregacion Que Administra</RadzenLabel>
+        </div>
+        <div class="col-md-8 d-flex mb-3">
+            <RadzenTextBox class="w-100" Disabled="@IsSave" @bind-Value="ProfileUser.Congregation" Name="Congregation"></RadzenTextBox>
+            <RadzenRequiredValidator class="rz-message rz-messages-error rz-message-popup newInputValidation mt-4"
+                                     Component="Congregation" Text="Llenar Campo"
+                                     Popup="true"
+                                     DefaultValue="0"/>
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col-md-4 d-flex">
+            <RadzenLabel>Distrito</RadzenLabel>
+        </div>
+        <div class="col-md-8 d-flex mb-3">
+            <RadzenTextBox class="w-100" Disabled="@IsSave" @bind-Value="ProfileUser.District" Name="District"></RadzenTextBox>
+            <RadzenRequiredValidator class="rz-message rz-messages-error rz-message-popup newInputValidation mt-4"
+                                     Component="District" Text="Llenar Campo"
+                                     Popup="true"
+                                     DefaultValue="0"/>
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col-md-4 align-items-center d-flex">
+            <RadzenLabel>EPS</RadzenLabel>
+        </div>
+        <div class="col-md-8 d-flex mb-3">
+            <RadzenTextBox class="w-100" Disabled="@IsSave" @bind-Value="ProfileUser.EPS" Name="EPS"></RadzenTextBox>
+            <RadzenRequiredValidator class="rz-message rz-messages-error rz-message-popup newInputValidation mt-4"
+                                     Component="EPS" Text="Llenar Campo"
+                                     Popup="true"
+                                     DefaultValue="0"/>
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col-md-4 align-items-center d-flex">
+            <RadzenLabel>Peso</RadzenLabel>
+        </div>
+        <div class="col-md-8 d-flex mb-3">
+            <RadzenNumeric @bind-Value="ProfileUser.Weight" Disabled="@IsSave" ShowUpDown="false" style="width: 100%;" Name="Weight"/>
+            <RadzenRequiredValidator class="rz-message rz-messages-error rz-message-popup newInputValidation mt-4" Component="Weight" Text="Llenar Campo" Popup="true" DefaultValue="0"/>
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col-md-4 align-items-center d-flex">
+            <RadzenLabel>Estatura</RadzenLabel>
+        </div>
+        <div class="col-md-8 d-flex mb-3">
+            <RadzenNumeric @bind-Value="ProfileUser.Height" Disabled="@IsSave" ShowUpDown="false" style="width: 100%;" Name="Height"></RadzenNumeric>
+            <RadzenRequiredValidator class="rz-message rz-messages-error rz-message-popup newInputValidation mt-4"
+                                     Component="Height" Text="Llenar Campo"
+                                     Popup="true"
+                                     DefaultValue="0"/>
+        </div>
+    </div>
+
+
+    <div class="row mb-2">
+        <div class="col-md-4  d-flex">
+            <RadzenLabel>Fecha Ingreso a Corpentunida</RadzenLabel>
+        </div>
+        <div class="col-md-8 d-flex mb-3">
+            <RadzenDatePicker class="w-100" Disabled="@IsSave" DateFormat="MM/dd/yyyy" @bind-Value="@ProfileUser.DateInitCorp" Name="DateInCorpe"></RadzenDatePicker>
+            <RadzenRequiredValidator class="rz-message rz-messages-error rz-message-popup newInputValidation mt-4"
+                                     Component="DateInCorpe" Text="Llenar Campo"
+                                     Popup="true"
+                                     DefaultValue="0"/>
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col-md-4  d-flex">
+            <RadzenLabel>Fecha Ingreso al Ministerio</RadzenLabel>
+        </div>
+        <div class="col-md-8 d-flex mb-3">
+            <RadzenDatePicker class="w-100" Disabled="@IsSave" DateFormat="MM/dd/yyyy" @bind-Value="@ProfileUser.DateInitMin" Name="DateInMin"></RadzenDatePicker>
+            <RadzenRequiredValidator class="rz-message rz-messages-error rz-message-popup newInputValidation mt-4"
+                                     Component="DateInMin" Text="Llenar Campo"
+                                     Popup="true"
+                                     DefaultValue="0"/>
+        </div>
+    </div>
+
+</div>
+
+</div>
+</div>
+
+
+</RadzenFieldset>
+<RadzenFieldset Text="Informacion Conyuge">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row mb-2">
+                    <div class="col-md-4">
+                        <RadzenLabel>Nombres</RadzenLabel>
+                    </div>
+                    <div class="col-md-8 d-flex mb-3">
+                        <RadzenTextBox class="w-100" Disabled="@IsSave" @bind-Value="ProfileUser.WifeNames"
+                                       Name="NameWife">
+                        </RadzenTextBox>
+                        <RadzenRequiredValidator class="rz-message rz-messages-error rz-message-popup newInputValidation mt-4"
+                                                 Component="NameWife" Text="Llenar Campo"
+                                                 Popup="true"
+                                                 DefaultValue="0"/>
+                    </div>
+                </div>
+
+
+                <div class="row mb-2">
+                    <div class="col-md-4 d-flex">
+                        <RadzenLabel Text="Celular"/>
+                    </div>
+                    <div class="col-md-8 d-flex mb-3">
+                        <RadzenTextBox class="w-100" Disabled="@IsSave" @bind-Value="ProfileUser.WifePhone"
+                                       Name="TelWife">
+                        </RadzenTextBox>
+                        <RadzenRequiredValidator class="rz-message rz-messages-error rz-message-popup newInputValidation mt-4"
+                                                 Component="TelWife" Text="Llenar Campo"
+                                                 Popup="true"
+                                                 DefaultValue="0"/>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-md-4">
+                        <RadzenLabel>No Hijos</RadzenLabel>
+                    </div>
+                    <div class="col-md-8 mb-3 d-flex">
+                        <RadzenNumeric Disabled="@IsSave" @bind-Value="ProfileUser.Childrens" style="width: 100%;" Name="Childrens"></RadzenNumeric>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-md-6">
+                <div class="row mb-2">
+                    <div class="col-md-4">
+                        <RadzenLabel>Apellidos</RadzenLabel>
+                    </div>
+                    <div class="col-md-8 d-flex mb-3">
+                        <RadzenTextBox class="w-100" Disabled="@IsSave" @bind-Value="ProfileUser.wifeLastNames"
+                                       Name="LastNamesWife">
+                        </RadzenTextBox>
+                        <RadzenRequiredValidator class="rz-message rz-messages-error rz-message-popup newInputValidation mt-4"
+                                                 Component="LastNamesWife" Text="Llenar Campo"
+                                                 Popup="true"
+                                                 DefaultValue="0"/>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-md-4">
+                        <RadzenLabel>No Pers Cargo</RadzenLabel>
+                    </div>
+                    <div class="col-md-8 d-flex mb-3">
+                        <RadzenNumeric Disabled="@IsSave" @bind-Value="ProfileUser.Persons" style="width: 100%;" Name="Persons"></RadzenNumeric>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</RadzenFieldset>
+<RadzenButton class="mt-2 col-12" Disabled="@IsSave" Style="background-color:#10172D" ButtonType="ButtonType.Submit">Guardar</RadzenButton>
+</RadzenTemplateForm>
+</RadzenCard>
+
+</div>
+
+@code {
+    DateTime? value = DateTime.Now;
+}
