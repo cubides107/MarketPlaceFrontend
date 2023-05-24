@@ -1,0 +1,56 @@
+﻿@using CreditAppWeb.Data.Http.Products
+@inject ProductClient ProductClient
+<RadzenCard Style="width: 400px;">
+    <RadzenTemplateForm Data="@ProductRequestDto1" Submit="@((ProductRequestDTO args) => { Register(); })">
+        <Fieldset>
+            <Legend>Información del Producto</Legend>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <RadzenLabel Text="Nombre" />
+                    <RadzenTextBox @bind-Value="@ProductRequestDto1.Name" Name="nombre" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <RadzenLabel Text="Descripción" />
+                    <RadzenTextBox @bind-Value="@ProductRequestDto1.Description" Name="descripcion" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <RadzenLabel Text="Precio" />
+                    <RadzenNumeric @bind-Value="ProductRequestDto1.Price" Name="precio" Format="C" />
+                </div>
+
+                <div class="col-md-6">
+                    <RadzenLabel Text="Stock" />
+                    <RadzenNumeric @bind-Value="@ProductRequestDto1.Stock" Name="stock" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <RadzenLabel Text="Referencia" />
+                    <RadzenTextBox @bind-Value="@ProductRequestDto1.Reference" Name="referencia" />
+                </div>
+            </div>
+        </Fieldset>
+
+        <div style="text-align: center; padding-top: 10px;">
+            <RadzenButton Text="Guardar" ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Primary" Name="submitForm" />
+        </div>
+    </RadzenTemplateForm>
+</RadzenCard>
+
+@code
+{
+    private ProductRequestDTO ProductRequestDto1 = new();
+
+    public async void Register()
+    {
+        await ProductClient.RegisterProduct(ProductRequestDto1);
+    }
+}

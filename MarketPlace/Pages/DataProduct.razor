@@ -1,0 +1,63 @@
+﻿@using CreditAppWeb.Data.Http.Products
+@using CreditAppWeb.Pages.Users
+
+<RadzenButton Text="Agregar Producto" Click="@RegisterProduct"></RadzenButton>
+
+<div class="row">
+   
+        @foreach (var product in ProductRequestDtos)
+        {
+            <div class="col-3">
+                <RadzenCard Style="width: 300px; height: 250px;">
+                    @* Agrega el encabezado *@
+                    <HeaderTemplate>
+                        <div style="text-align: center;">
+                            <h3>@product.Name</h3>
+                        </div>
+                    </HeaderTemplate>
+        
+                    @* Agrega la imagen del producto *@
+                    <BodyTemplate>
+                        <div style="text-align: center;">
+                            <img src="logo.png" style="max-width: 200px; max-height: 200px;" />
+                        </div>
+                    </BodyTemplate>
+        
+                    @* Agrega la descripción, cantidad y precio *@
+                    <FooterTemplate>
+                        <div style="padding: 5px;">
+                            <p><strong>Descripción:</strong> @product.Description</p>
+                            <p><strong>Cantidad:</strong> @product.Stock</p>
+                            <p><strong>Precio:</strong> $@product.Price</p>
+                        </div>
+                    </FooterTemplate>
+                </RadzenCard>
+                 </div>
+        }
+   
+</div>
+
+
+@* Crea la tarjeta *@
+
+
+@code
+{
+    
+    
+    private List<ProductRequestDTO> ProductRequestDtos = new()
+    {
+        new ProductRequestDTO(){Name = "test",Description = "sdfsdfsdf",Price = 234234, Stock = 4,Reference = "sdfsdf"},
+    new ProductRequestDTO(){Name = "test",Description = "sdfsdfsdf",Price = 234234, Stock = 4,Reference = "sdfsdf"},
+    new ProductRequestDTO(){Name = "test",Description = "sdfsdfsdf",Price = 234234, Stock = 4,Reference = "sdfsdf"}
+    };
+
+
+    private async Task RegisterProduct()
+    {
+        await DialogService.OpenAsync<RegisterProduct>("Registrar Producto",
+            new Dictionary<string, object>(){},
+            new DialogOptions
+            { Width = "70%", Height = "auto", Resizable = false, Draggable = false, CssClass = "mt-5", ShowClose = false});
+    }
+}
