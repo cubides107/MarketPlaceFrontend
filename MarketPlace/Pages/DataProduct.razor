@@ -2,11 +2,12 @@
 @using CreditAppWeb.Pages.Users
 @inject ProductClient ProductClientHttp
 
-<RadzenButton Text="Agregar Producto" Click="@RegisterProduct"></RadzenButton>
+<h2>Productos</h2>
+<RadzenButton Text="Agregar Producto" ButtonStyle="ButtonStyle.Success" Variant="Variant.Filled" Click="@RegisterProduct"></RadzenButton>
 
 <RadzenLayout Style="height: auto; grid-template-columns: 1fr auto; grid-template-areas: 'rz-header rz-header' 'rz-body rz-sidebar'">
     <RadzenSidebar>
-        <div class="rz-p-4">
+        <div class="rz-p-4 mb-3">
             <Car ListProduct="ListProductCar"></Car>
         </div>
     </RadzenSidebar>

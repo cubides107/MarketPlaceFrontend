@@ -1,6 +1,8 @@
 ﻿@using CreditAppWeb.Data.Http.ShoppingCar
 @inject ProductClient ProductClientHttp
 @inject ShoppinCarClient ShoppinCarClient
+<h2>Carrito de Compra</h2>
+
 <RadzenDataList Data="ListProduct" TItem="ProductRequestDTO">
     <Template Context="product">
         <RadzenRow>
@@ -10,7 +12,7 @@
             <RadzenColumn>
                 <RadzenRow>
                     <RadzenColumn>
-                        <RadzenBadge BadgeStyle="BadgeStyle.Secondary" Shade="Shade.Lighter" Text=@($"{String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", product.Price)}")></RadzenBadge>
+                        <RadzenBadge BadgeStyle="BadgeStyle.Info" Shade="Shade.Lighter" Text=@($"{String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", product.Price)}")></RadzenBadge>
                     </RadzenColumn>
                 </RadzenRow>
             </RadzenColumn>
@@ -19,7 +21,7 @@
     </Template>
 
 </RadzenDataList>
-<RadzenButton Text="Comprar" Click="Carhttp"></RadzenButton>
+<RadzenButton Text="Comprar" ButtonStyle="ButtonStyle.Success" Click="Carhttp"></RadzenButton>
 
 @code
 {
@@ -34,7 +36,9 @@
             productId.Add(product.Id);
         }
         var a = await ShoppinCarClient.AddProductsCar(productId);
-        DialogService.Alert($"El total de su compra es:{a.TotalPrice}","Compra Exitosa",new AlertOptions(){OkButtonText = "Aceptar"});
+       await DialogService.Alert($"El total de su compra es:{a.TotalPrice}","Compra Exitosa",new AlertOptions(){OkButtonText = "Aceptar"});
+        ListProduct.Clear();
+        StateHasChanged();
     }
     
 }

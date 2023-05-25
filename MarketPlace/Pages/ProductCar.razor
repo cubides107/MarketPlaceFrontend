@@ -1,5 +1,5 @@
 ﻿<div class="col-3">
-    <RadzenCard Style="width: 300px; height: 250px;">
+    <RadzenCard class="mb-3" Style="width: 300px; height: 320px;">
         @* Agrega el encabezado *@
         <HeaderTemplate>
             <div style="text-align: center;">
@@ -26,7 +26,7 @@
                 <p><strong>Precio:</strong> $@product.Price</p>
             </div>
         </FooterTemplate>
-        <RadzenButton Text="Comprar" Click="AddProduct"></RadzenButton>
+        <RadzenButton ButtonStyle="ButtonStyle.Success" Text="Comprar" Variant="Variant.Outlined" Click="AddProduct"></RadzenButton>
     </RadzenCard>
 </div>
 
