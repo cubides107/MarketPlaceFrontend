@@ -52,5 +52,7 @@
     public async void Register()
     {
         await ProductClient.RegisterProduct(ProductRequestDto1);
+        await ProductClient.GetAllProducts();
+        DialogService.Close();
     }
 }

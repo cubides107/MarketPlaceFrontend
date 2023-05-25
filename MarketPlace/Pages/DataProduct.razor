@@ -1,41 +1,25 @@
 ﻿@using CreditAppWeb.Data.Http.Products
 @using CreditAppWeb.Pages.Users
+@inject ProductClient ProductClientHttp
 
 <RadzenButton Text="Agregar Producto" Click="@RegisterProduct"></RadzenButton>
 
-<div class="row">
-   
-        @foreach (var product in ProductRequestDtos)
-        {
-            <div class="col-3">
-                <RadzenCard Style="width: 300px; height: 250px;">
-                    @* Agrega el encabezado *@
-                    <HeaderTemplate>
-                        <div style="text-align: center;">
-                            <h3>@product.Name</h3>
-                        </div>
-                    </HeaderTemplate>
-        
-                    @* Agrega la imagen del producto *@
-                    <BodyTemplate>
-                        <div style="text-align: center;">
-                            <img src="logo.png" style="max-width: 200px; max-height: 200px;" />
-                        </div>
-                    </BodyTemplate>
-        
-                    @* Agrega la descripción, cantidad y precio *@
-                    <FooterTemplate>
-                        <div style="padding: 5px;">
-                            <p><strong>Descripción:</strong> @product.Description</p>
-                            <p><strong>Cantidad:</strong> @product.Stock</p>
-                            <p><strong>Precio:</strong> $@product.Price</p>
-                        </div>
-                    </FooterTemplate>
-                </RadzenCard>
-                 </div>
-        }
-   
-</div>
+<RadzenLayout Style="height: auto; grid-template-columns: 1fr auto; grid-template-areas: 'rz-header rz-header' 'rz-body rz-sidebar'">
+    <RadzenSidebar>
+        <div class="rz-p-4">
+            <Car ListProduct="ListProductCar"></Car>
+        </div>
+    </RadzenSidebar>
+    <RadzenBody>
+            <div class="row">
+
+                @foreach (var product in ProductRequestDtos)
+                {
+                    <ProductCar product="product" AddProductCar="AddProductCar"></ProductCar>
+                }
+            </div>
+    </RadzenBody>
+</RadzenLayout>
 
 
 @* Crea la tarjeta *@
@@ -43,21 +27,34 @@
 
 @code
 {
-    
-    
-    private List<ProductRequestDTO> ProductRequestDtos = new()
-    {
-        new ProductRequestDTO(){Name = "test",Description = "sdfsdfsdf",Price = 234234, Stock = 4,Reference = "sdfsdf"},
-    new ProductRequestDTO(){Name = "test",Description = "sdfsdfsdf",Price = 234234, Stock = 4,Reference = "sdfsdf"},
-    new ProductRequestDTO(){Name = "test",Description = "sdfsdfsdf",Price = 234234, Stock = 4,Reference = "sdfsdf"}
-    };
 
+    protected async override void OnInitialized()
+    {
+        base.OnInitialized();
+        await LoadData();
+    }
+
+    private void AddProductCar(ProductRequestDTO product)
+    {
+        ListProductCar.Add(product);
+    }
+
+    private List<ProductRequestDTO> ProductRequestDtos = new();
+
+    private List<ProductRequestDTO> ListProductCar = new();
+
+    private async Task LoadData()
+    {
+        ProductRequestDtos = await ProductClientHttp.GetAllProducts();
+        StateHasChanged();
+    }
 
     private async Task RegisterProduct()
     {
         await DialogService.OpenAsync<RegisterProduct>("Registrar Producto",
-            new Dictionary<string, object>(){},
+            new Dictionary<string, object>() { },
             new DialogOptions
-            { Width = "70%", Height = "auto", Resizable = false, Draggable = false, CssClass = "mt-5", ShowClose = false});
+            { Width = "auto", Height = "auto", Resizable = false, Draggable = false, CssClass = "mt-5", ShowClose = true });
+        await LoadData();
     }
 }

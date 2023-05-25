@@ -1,0 +1,40 @@
+﻿@using CreditAppWeb.Data.Http.ShoppingCar
+@inject ProductClient ProductClientHttp
+@inject ShoppinCarClient ShoppinCarClient
+<RadzenDataList Data="ListProduct" TItem="ProductRequestDTO">
+    <Template Context="product">
+        <RadzenRow>
+            <RadzenColumn>
+                <RadzenText Text="@product.Name"></RadzenText>
+            </RadzenColumn>
+            <RadzenColumn>
+                <RadzenRow>
+                    <RadzenColumn>
+                        <RadzenBadge BadgeStyle="BadgeStyle.Secondary" Shade="Shade.Lighter" Text=@($"{String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", product.Price)}")></RadzenBadge>
+                    </RadzenColumn>
+                </RadzenRow>
+            </RadzenColumn>
+        </RadzenRow>
+        
+    </Template>
+
+</RadzenDataList>
+<RadzenButton Text="Comprar" Click="Carhttp"></RadzenButton>
+
+@code
+{
+    [Parameter]
+    public List<ProductRequestDTO> ListProduct { get; set; }
+
+    public async void Carhttp()
+    {
+        List<int> productId = new();
+        foreach (var product in ListProduct)
+        {
+            productId.Add(product.Id);
+        }
+        var a = await ShoppinCarClient.AddProductsCar(productId);
+        DialogService.Alert($"El total de su compra es:{a.TotalPrice}","Compra Exitosa",new AlertOptions(){OkButtonText = "Aceptar"});
+    }
+    
+}

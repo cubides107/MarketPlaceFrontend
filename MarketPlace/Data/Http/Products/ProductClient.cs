@@ -22,4 +22,11 @@ public class ProductClient
         var idUser = await httpClient.PutAsJsonAsync("RegisterProduct", product);
         return await idUser.Content.ReadAsStringAsync();
     }
+    public async Task<List<ProductRequestDTO>> GetAllProducts()
+    {
+        /*var token = await localStorage.GetItemAsync<string>("token");
+        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);*/
+        return await httpClient.GetFromJsonAsync<List<ProductRequestDTO>>("GetAllProducts");
+    }
+   
 }
